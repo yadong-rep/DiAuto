@@ -586,6 +586,7 @@ class CommManager(
      *                 a user's log readable.
      */
     fun sendKey(keyCode: Int, isPress: Boolean, downTime: Long? = null, source: String = "unknown") {
+        if (!com.hongqi.flighting.integration.FeatureIntegration.isAuthorized(context)) return
         if (_connectionState.value !is ConnectionState.TransportStarted) {
             return
         }

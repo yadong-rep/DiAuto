@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 金色边框层 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/hongqi_brand_gold" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <!-- 内部渐变背景层（各内缩 2dp 露出金色边框） -->
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:centerColor="#141018"
+                android:endColor="#08090D"
+                android:startColor="#28070A" />
+            <corners android:radius="6dp" />
+        </shape>
+    </item>
+</layer-list>

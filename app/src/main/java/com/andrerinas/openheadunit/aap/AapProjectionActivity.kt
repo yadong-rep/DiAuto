@@ -1336,6 +1336,7 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
             options.add(ExitOption(R.string.exit_dialog_pip, R.drawable.ic_pip, Color.LTGRAY))
         }
 
+        options.add(ExitOption(R.string.hongqi_features_entry, R.drawable.ic_settings_quick, Color.LTGRAY))
         options.add(ExitOption(R.string.exit_dialog_background, R.drawable.ic_home, Color.LTGRAY))
         options.add(ExitOption(R.string.exit_dialog_settings, R.drawable.ic_settings_quick, Color.LTGRAY))
 
@@ -1371,6 +1372,9 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
                     }
                     R.string.exit_dialog_background -> {
                         moveToBackground()
+                    }
+                    R.string.hongqi_features_entry -> {
+                        com.hongqi.flighting.integration.FeatureIntegration.openFeatures(this)
                     }
                     R.string.exit_dialog_settings -> {
                         showQuickSettings()
@@ -1727,6 +1731,7 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
 
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(this, event)) return true
         val action = event.action
         if (action != KeyEvent.ACTION_DOWN && action != KeyEvent.ACTION_UP) {
             return super.dispatchKeyEvent(event)

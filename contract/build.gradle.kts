@@ -7,7 +7,8 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 36
+    buildToolsVersion = "36.0.0"
     namespace = "com.andrerinas.openheadunit.contract"
 
     defaultConfig {

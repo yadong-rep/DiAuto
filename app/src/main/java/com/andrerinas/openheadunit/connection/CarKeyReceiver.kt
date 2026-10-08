@@ -67,6 +67,7 @@ class CarKeyReceiver : BroadcastReceiver() {
             || action == "cn.kuwo.kwmusicauto.action.MEDIA_BUTTON") {
             val event = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
             if (event != null) {
+                if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(context, event)) return
                 if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
                     handleKey(context, commManager, event.keyCode, true)
                 } else if (event.action == KeyEvent.ACTION_UP) {
@@ -128,6 +129,7 @@ class CarKeyReceiver : BroadcastReceiver() {
 
     /** Single key press or release — broadcasts for learning and projection handling. */
     private fun handleKey(context: Context, commManager: CommManager, keyCode: Int, isDown: Boolean) {
+        if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(context, keyCode, isDown)) return
         AppLog.d("CarKeyReceiver: Broadcasting key event: code=$keyCode, isDown=$isDown")
         context.sendBroadcast(Intent(KeyIntent.action).apply {
             setPackage(context.packageName)

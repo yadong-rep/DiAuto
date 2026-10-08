@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="0dp"
+        android:gravity="bottom">
+        <shape>
+            <size android:height="3dp" />
+            <solid android:color="@color/hongqi_brand_gold" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+</layer-list>

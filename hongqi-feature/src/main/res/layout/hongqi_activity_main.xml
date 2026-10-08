@@ -1,0 +1,2018 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hongqi_bg_app_background"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/hongqi_btn_diauto_home"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="返回 DiAuto"
+        android:textAllCaps="false"
+        android:textColor="@color/hongqi_brand_gold"
+        android:background="@drawable/hongqi_bg_tab_bar" />
+
+    <!-- ====== Tab 栏（顶部，不悬浮，渐变融入下方内容） ====== -->
+    <LinearLayout
+        android:id="@+id/hongqi_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/hongqi_bg_tab_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
+
+        <Button
+            android:id="@+id/hongqi_btn_tab_cast"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/hongqi_bg_tab_active"
+            android:text="飞屏"
+            android:textColor="@color/hongqi_brand_gold"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/hongqi_btn_tab_mapping"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/hongqi_bg_tab_inactive"
+            android:text="按键映射"
+            android:textColor="@color/hongqi_muted_text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/hongqi_btn_tab_autostart"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/hongqi_bg_tab_inactive"
+            android:text="启动"
+            android:textColor="@color/hongqi_muted_text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/hongqi_btn_tab_sidebar"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/hongqi_bg_tab_inactive"
+            android:text="侧边栏"
+            android:textColor="@color/hongqi_muted_text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/hongqi_layout_cast_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="22dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/hongqi_bg_hero_panel"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:letterSpacing="0.08"
+                    android:text="红旗飞屏"
+                    android:textColor="@color/hongqi_title"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/hongqi_bg_status_pill"
+                    android:gravity="center"
+android:padding="10dp"
+                    android:text="状态: 已停止"
+                    android:textColor="@color/hongqi_status"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/hongqi_btn_cast"
+                    android:layout_width="168dp"
+                    android:layout_height="168dp"
+                    android:layout_marginTop="26dp"
+                    android:background="@drawable/hongqi_bg_cast_button"
+                    android:backgroundTint="@null"
+                    android:gravity="center"
+                    android:minWidth="168dp"
+                    android:minHeight="168dp"
+                    android:padding="18dp"
+                    android:text="开始投屏"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <!-- ====== 区域1 配置（主页） ====== -->
+            <LinearLayout
+                android:id="@+id/hongqi_home_region1_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/hongqi_text_home_video_shortcut_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="区域 1"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/hongqi_home_text_output_width_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="仪表占用宽度：100%"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/hongqi_home_seek_output_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                android:max="100"
+                android:progress="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="水平位置"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_home_spinner_output_align"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:paddingHorizontal="8dp" />
+
+                <com.hongqi.flighting.ui.CropSelectionView
+                    android:id="@+id/hongqi_home_crop_selection_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingTop="16dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_home_text_crop_range_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/hongqi_bg_status_pill"
+                    android:padding="10dp"
+                    android:text="当前裁剪：水平 -100~100，垂直 -100~100"
+                    android:textColor="@color/hongqi_brand_gold"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- ====== 区域2 配置（主页） ====== -->
+            <LinearLayout
+                android:id="@+id/hongqi_home_region2_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="区域 2"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Switch
+                        android:id="@+id/hongqi_home_switch_region2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hongqi_home_region2_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="来源"
+                            android:textColor="@color/hongqi_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Spinner
+                            android:id="@+id/hongqi_home_spinner_source_type_2"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:background="@drawable/hongqi_bg_field"
+                            android:paddingHorizontal="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hongqi_home_layout_image_picker_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <Button
+                            android:id="@+id/hongqi_home_btn_select_image_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:background="@drawable/hongqi_bg_outline_button"
+                            android:paddingHorizontal="12dp"
+                            android:text="选择图片"
+                            android:textColor="@color/hongqi_brand_gold"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/hongqi_home_text_selected_image_2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="10dp"
+                            android:text="未选择"
+                            android:textColor="@color/hongqi_subtitle"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/hongqi_home_text_output_width_summary_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="仪表占用宽度：0%"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <SeekBar
+                        android:id="@+id/hongqi_home_seek_output_width_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:max="100"
+                        android:progress="0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="水平位置"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/hongqi_home_spinner_output_align_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/hongqi_bg_field"
+                        android:paddingHorizontal="8dp" />
+
+                    <com.hongqi.flighting.ui.CropSelectionView
+                        android:id="@+id/hongqi_home_crop_selection_view_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:layout_marginTop="26dp"
+                        android:layout_marginBottom="8dp"
+                        android:paddingTop="16dp" />
+
+                    <TextView
+                        android:id="@+id/hongqi_home_text_crop_range_summary_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hongqi_bg_status_pill"
+                        android:padding="10dp"
+                        android:text="当前裁剪：水平 -100~100，垂直 -100~100"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ====== 区域3 配置（主页） ====== -->
+            <LinearLayout
+                android:id="@+id/hongqi_home_region3_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="区域 3"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Switch
+                        android:id="@+id/hongqi_home_switch_region3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hongqi_home_region3_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="来源"
+                            android:textColor="@color/hongqi_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Spinner
+                            android:id="@+id/hongqi_home_spinner_source_type_3"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:background="@drawable/hongqi_bg_field"
+                            android:paddingHorizontal="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hongqi_home_layout_image_picker_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <Button
+                            android:id="@+id/hongqi_home_btn_select_image_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:background="@drawable/hongqi_bg_outline_button"
+                            android:paddingHorizontal="12dp"
+                            android:text="选择图片"
+                            android:textColor="@color/hongqi_brand_gold"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/hongqi_home_text_selected_image_3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="10dp"
+                            android:text="未选择"
+                            android:textColor="@color/hongqi_subtitle"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/hongqi_home_text_output_width_summary_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="仪表占用宽度：0%"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <SeekBar
+                        android:id="@+id/hongqi_home_seek_output_width_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:max="100"
+                        android:progress="0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="水平位置"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/hongqi_home_spinner_output_align_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/hongqi_bg_field"
+                        android:paddingHorizontal="8dp" />
+
+                    <com.hongqi.flighting.ui.CropSelectionView
+                        android:id="@+id/hongqi_home_crop_selection_view_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:layout_marginTop="26dp"
+                        android:layout_marginBottom="8dp"
+                        android:paddingTop="16dp" />
+
+                    <TextView
+                        android:id="@+id/hongqi_home_text_crop_range_summary_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hongqi_bg_status_pill"
+                        android:padding="10dp"
+                        android:text="当前裁剪：水平 -100~100，垂直 -100~100"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ====== 按键映射 Tab 内容（与飞屏同风格，不另开页面） ====== -->
+    <ScrollView
+        android:id="@+id/hongqi_layout_key_mapping"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="18dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="22dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.06"
+                android:text="按键映射"
+                android:textColor="@color/hongqi_title"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="用以绑定车机内音乐软件上一曲、下一曲、暂停/播放"
+                android:textColor="@color/hongqi_subtitle"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/hongqi_key_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:lineSpacingMultiplier="1.25"
+                android:textColor="@color/hongqi_text"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/hongqi_btn_key_accessibility"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/hongqi_bg_outline_button"
+                android:text="开启按键映射服务（必须）"
+                android:textColor="@color/hongqi_brand_gold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="未开启时：方向盘映射只能在本页面响应，侧栏“返回上层”也无法跨应用执行。"
+                android:textColor="@color/hongqi_status"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/hongqi_btn_key_media_access"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/hongqi_bg_outline_button"
+                android:text="开启媒体会话访问"
+                android:textColor="@color/hongqi_brand_gold" />
+
+            <Button
+                android:id="@+id/hongqi_btn_key_double_tap_cast"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/hongqi_bg_outline_button"
+                android:text="投屏键：未设置"
+                android:textColor="@color/hongqi_brand_gold" />
+
+            <Button
+                android:id="@+id/hongqi_btn_key_add_mapping"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/hongqi_bg_primary_button"
+                android:backgroundTint="@null"
+                android:text="添加按键映射"
+                android:textColor="@color/hongqi_button_text"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="当前映射"
+                android:textColor="@color/hongqi_subtitle"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/hongqi_layout_key_mappings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/hongqi_btn_key_clear_all"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/hongqi_bg_outline_button"
+                android:text="清空映射"
+                android:textColor="#E85B5B" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="同一套实体按键支持绑定多个音乐应用。控制优先级如下：若原车音乐或其他未绑定播放器正在播放，则停用自定义映射并放行按键；否则，优先控制正在播放的已绑定应用，若无，则控制媒体会话优先级最高的已绑定应用。"
+                android:textColor="@color/hongqi_subtitle"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ====== 启动 Tab 内容（本应用开机自启 / 开机启动其他应用，与主界面同风格） ====== -->
+    <ScrollView
+        android:id="@+id/hongqi_layout_autostart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="18dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="22dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.06"
+                android:text="启动"
+                android:textColor="@color/hongqi_title"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="配置本应用开机自启，及开机顺序启动其他应用"
+                android:textColor="@color/hongqi_subtitle"
+                android:textSize="13sp" />
+
+            <!-- 本应用开机自启 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="本应用开机自启"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="车机启动后自动打开红旗飞屏"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/hongqi_switch_autostart_boot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- 开机启动其他应用 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="开机启动其他应用"
+                            android:textColor="@color/hongqi_section_title"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="启用后按列表顺序自动打开选中的应用"
+                            android:textColor="@color/hongqi_subtitle"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/hongqi_switch_autostart_enabled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="已选择应用"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/hongqi_layout_autostart_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical" />
+
+                <Button
+                    android:id="@+id/hongqi_btn_autostart_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/hongqi_bg_primary_button"
+                    android:backgroundTint="@null"
+                    android:text="添加应用"
+                    android:textColor="@color/hongqi_text"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="首次启动延迟（秒）"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/hongqi_edit_autostart_delay"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="应用启动间隔（秒）"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/hongqi_edit_autostart_interval"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="全部启动后返回桌面"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="15sp" />
+
+                    <Switch
+                        android:id="@+id/hongqi_switch_autostart_return_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/hongqi_btn_autostart_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/hongqi_bg_primary_button"
+                    android:backgroundTint="@null"
+                    android:text="保存设置"
+                    android:textColor="@color/hongqi_text"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="应用会按列表顺序启动。启动延迟和间隔范围为 0-300 秒。"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ====== 侧边栏 Tab ====== -->
+    <ScrollView
+        android:id="@+id/hongqi_layout_sidebar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="18dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="22dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.06"
+                android:text="侧边栏"
+                android:textColor="@color/hongqi_title"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="屏幕边缘向内滑动呼出侧边栏，快速启动应用与系统开关"
+                android:textColor="@color/hongqi_subtitle"
+                android:textSize="13sp" />
+
+            <!-- 启用侧边栏 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="启用侧边栏"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="开启后在屏幕边缘生成感应条，向内滑动呼出"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/hongqi_switch_sidebar_enabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- 悬浮窗权限 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="悬浮窗权限"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="侧边栏需要悬浮窗权限才能在屏幕边缘显示"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/hongqi_btn_sidebar_overlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:minWidth="98dp"
+                    android:background="@drawable/hongqi_bg_outline_button"
+                    android:text="去开启"
+                    android:textColor="@color/hongqi_brand_gold"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 位置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="感应条位置"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_sidebar_side"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:background="@drawable/hongqi_bg_field" />
+            </LinearLayout>
+
+            <!-- 快捷方式 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="侧边栏项目"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="长按侧边栏中的图标可移除"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/hongqi_layout_sidebar_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/hongqi_btn_sidebar_add_app"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_primary_button"
+                        android:backgroundTint="@null"
+                        android:text="添加应用"
+                        android:textColor="@color/hongqi_text"
+                        android:textStyle="bold"
+                        app:backgroundTint="@null" />
+
+                    <Button
+                        android:id="@+id/hongqi_btn_sidebar_add_widget"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_primary_button"
+                        android:backgroundTint="@null"
+                        android:text="添加控件"
+                        android:textColor="@color/hongqi_text"
+                        android:textStyle="bold"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 外观设置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="面板外观"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="自定义侧边栏的颜色、虚化与圆角"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="12sp" />
+
+                <!-- 背景颜色 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="背景颜色"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="15sp" />
+
+                    <Spinner
+                        android:id="@+id/hongqi_spinner_sidebar_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:background="@drawable/hongqi_bg_field" />
+                </LinearLayout>
+
+                <!-- 圆角半径 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="圆角半径"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/hongqi_tv_sidebar_corner_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:minWidth="36dp"
+                        android:text="16"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="14sp" />
+
+                    <SeekBar
+                        android:id="@+id/hongqi_seekbar_sidebar_corner"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:max="32"
+                        android:progress="16" />
+                </LinearLayout>
+
+                <!-- 虚化强度 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="虚化强度"
+                            android:textColor="@color/hongqi_text"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Android 12+ 生效"
+                            android:textColor="@color/hongqi_subtitle"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/hongqi_tv_sidebar_blur_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:minWidth="36dp"
+                        android:text="0"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="14sp" />
+
+                    <SeekBar
+                        android:id="@+id/hongqi_seekbar_sidebar_blur"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:max="25"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <!-- 面板透明度 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="面板透明度"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/hongqi_tv_sidebar_alpha_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:minWidth="36dp"
+                        android:text="87%"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="14sp" />
+
+                    <SeekBar
+                        android:id="@+id/hongqi_seekbar_sidebar_alpha"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:max="255"
+                        android:progress="221" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 震动反馈 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="震动反馈"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="呼出侧边栏时轻微震动提示"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/hongqi_switch_sidebar_vibrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/hongqi_btn_sidebar_save"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/hongqi_bg_primary_button"
+                android:backgroundTint="@null"
+                android:text="保存并应用"
+                android:textColor="@color/hongqi_text"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/hongqi_btn_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/hongqi_bg_outline_button"
+        android:minWidth="92dp"
+        android:text="设置"
+        android:textColor="@color/hongqi_brand_gold"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/hongqi_layout_settings_panel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/hongqi_bg_app_background"
+        android:clipToPadding="false"
+        android:padding="14dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="22dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.06"
+                        android:text="投屏控制台"
+                        android:textColor="@color/hongqi_title"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="车机画面推送到仪表盘"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/hongqi_btn_settings_back"
+                    android:layout_width="82dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/hongqi_bg_outline_button"
+                    android:text="返回"
+                    android:textColor="@color/hongqi_brand_gold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="主开关"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="启用后使用当前配置进行本地镜像"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+<Switch
+                    android:id="@+id/hongqi_switch_enabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="模拟器 / 无第二屏"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="把三区域合成画面录制保存到系统 Download 目录（不投屏到屏幕）"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/hongqi_switch_simulator_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="车机屏幕"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="显示当前 Android 系统能看到的屏幕数量和参数，用于确认中控屏/仪表屏是否暴露给 App。"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/hongqi_btn_refresh_displays"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/hongqi_bg_outline_button"
+                    android:text="刷新屏幕信息"
+                    android:textColor="@color/hongqi_brand_gold" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_display_output"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/hongqi_bg_info_box"
+                    android:fontFamily="monospace"
+                    android:padding="12dp"
+                    android:text="屏幕信息加载中..."
+                    android:textColor="@color/hongqi_text"
+                    android:textIsSelectable="true"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="视频配置"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="拉伸方式"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_stretch_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:entries="@array/hongqi_stretch_modes"
+                    android:paddingHorizontal="8dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_stretch_mode_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="输出固定为仪表 1920x720；这里控制车机画面如何铺到仪表宽屏。"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_output_width_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="仪表占用宽度：100%"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/hongqi_seek_output_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                android:max="100"
+                            android:progress="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="水平位置"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_output_align"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:paddingHorizontal="8dp" />
+
+                <com.hongqi.flighting.ui.CropSelectionView
+                    android:id="@+id/hongqi_crop_selection_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_crop_range_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/hongqi_bg_status_pill"
+                    android:padding="10dp"
+                    android:text="当前裁剪：水平 -100~100，垂直 -100~100"
+                    android:textColor="@color/hongqi_brand_gold"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="拖动蓝色区域移动截取范围；拖四个角改变大小。-100=最左/最上，100=最右/最下。"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- ====== 区域2 配置（设置页） ====== -->
+            <LinearLayout
+                android:id="@+id/hongqi_settings_region2_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="区域 2 配置"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Switch
+                        android:id="@+id/hongqi_settings_switch_region2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="来源"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/hongqi_settings_spinner_source_type_2"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/hongqi_bg_field"
+                        android:paddingHorizontal="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hongqi_settings_layout_image_picker_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/hongqi_settings_btn_select_image_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:background="@drawable/hongqi_bg_outline_button"
+                        android:paddingHorizontal="12dp"
+                        android:text="选择图片"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/hongqi_settings_text_selected_image_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="未选择"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="拉伸方式"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_stretch_mode_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:paddingHorizontal="8dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_output_width_summary_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="仪表占用宽度：50%"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/hongqi_seek_output_width_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:max="100"
+                    android:progress="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="水平位置"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_output_align_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:paddingHorizontal="8dp" />
+
+                <com.hongqi.flighting.ui.CropSelectionView
+                    android:id="@+id/hongqi_crop_selection_view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_crop_range_summary_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/hongqi_bg_status_pill"
+                    android:padding="10dp"
+                    android:text="当前裁剪：水平 -100~100，垂直 -100~100"
+                    android:textColor="@color/hongqi_brand_gold"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- ====== 区域3 配置（设置页） ====== -->
+            <LinearLayout
+                android:id="@+id/hongqi_settings_region3_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="区域 3 配置"
+                        android:textColor="@color/hongqi_section_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Switch
+                        android:id="@+id/hongqi_settings_switch_region3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="来源"
+                        android:textColor="@color/hongqi_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/hongqi_settings_spinner_source_type_3"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/hongqi_bg_field"
+                        android:paddingHorizontal="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hongqi_settings_layout_image_picker_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/hongqi_settings_btn_select_image_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:background="@drawable/hongqi_bg_outline_button"
+                        android:paddingHorizontal="12dp"
+                        android:text="选择图片"
+                        android:textColor="@color/hongqi_brand_gold"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/hongqi_settings_text_selected_image_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="未选择"
+                        android:textColor="@color/hongqi_subtitle"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="拉伸方式"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_stretch_mode_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:paddingHorizontal="8dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_output_width_summary_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="仪表占用宽度：30%"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/hongqi_seek_output_width_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:max="100"
+                    android:progress="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="水平位置"
+                    android:textColor="@color/hongqi_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/hongqi_spinner_output_align_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hongqi_bg_field"
+                    android:paddingHorizontal="8dp" />
+
+                <com.hongqi.flighting.ui.CropSelectionView
+                    android:id="@+id/hongqi_crop_selection_view_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/hongqi_text_crop_range_summary_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/hongqi_bg_status_pill"
+                    android:padding="10dp"
+                    android:text="当前裁剪：水平 -100~100，垂直 -100~100"
+                    android:textColor="@color/hongqi_brand_gold"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+<Button
+                        android:id="@+id/hongqi_btn_start"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_primary_button"
+                        android:text="开始镜像"
+                        android:textColor="@color/hongqi_button_text"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/hongqi_btn_stop"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_danger_button"
+                        android:enabled="false"
+                        android:text="停止镜像"
+                        android:textColor="@color/hongqi_button_text"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/hongqi_btn_save"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_outline_button"
+                        android:text="保存配置"
+                        android:textColor="@color/hongqi_brand_gold" />
+
+                    <Button
+                        android:id="@+id/hongqi_btn_reset"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_outline_button"
+                        android:text="重置"
+                        android:textColor="@color/hongqi_brand_gold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/hongqi_bg_panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="诊断日志"
+                    android:textColor="@color/hongqi_section_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="用于排查原车导航恢复、RTP 占用，以及 sv_rtp_service/GWRtpService/PateoMapAuto 相关日志。"
+                    android:textColor="@color/hongqi_subtitle"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/hongqi_btn_refresh_logs"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_outline_button"
+                        android:text="刷新日志"
+                        android:textColor="@color/hongqi_brand_gold" />
+
+                    <Button
+                        android:id="@+id/hongqi_btn_clear_logs"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/hongqi_bg_outline_button"
+                        android:text="清空"
+                        android:textColor="@color/hongqi_brand_gold" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/hongqi_text_log_output"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/hongqi_bg_log_box"
+                    android:cursorVisible="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="monospace"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:overScrollMode="always"
+                    android:padding="12dp"
+                    android:scrollbars="vertical"
+                    android:text="日志加载中..."
+                    android:textColor="#E8D9B6"
+                    android:textIsSelectable="true"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -94,6 +94,7 @@ class CarKeyBroadcastReceiver : BroadcastReceiver(), CarKeyReceiver {
             || action == "cn.kuwo.kwmusicauto.action.MEDIA_BUTTON") {
             val event = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
             if (event != null) {
+                if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(context, event)) return
                 if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
                     handleKey(context, event.keyCode, true)
                 } else if (event.action == KeyEvent.ACTION_UP) {

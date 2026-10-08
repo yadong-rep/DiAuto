@@ -62,6 +62,7 @@ class AapBroadcastReceiver : BroadcastReceiver() {
                 intent.getParcelableExtra(KeyIntent.extraEvent)
             }
             event?.let {
+                if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(context, it)) return
                 component.commManager.sendKey(
                     it.keyCode, it.action == KeyEvent.ACTION_DOWN, it.downTime, "media-key-intent"
                 )

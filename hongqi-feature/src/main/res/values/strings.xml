@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hongqi_app_name">红旗飞屏</string>
+    <string name="hongqi_cluster_mirror_unsupported_message">当前车型暂不支持仪表镜像，需要原厂/OEM 或系统级支持</string>
+    <string name="hongqi_cluster_mirror_unavailable_label">暂不支持</string>
+    <string name="hongqi_key_mapping_service_label">按键映射服务</string>
+    <string name="hongqi_key_mapping_media_service_label">按键映射媒体服务</string>
+    <string name="hongqi_key_mapping_accessibility_description">在后台监听方向盘按键事件，用于学习并模拟注入按键（如上一曲/下一曲切歌）。</string>
+    <string-array name="hongqi_stretch_modes">
+        <item>满屏拉伸（铺满仪表）</item>
+        <item>等比完整显示（可能留黑边）</item>
+        <item>等比填满裁切（可能裁边）</item>
+        <item>适应宽度</item>
+        <item>适应高度</item>
+        <item>居中原比例</item>
+    </string-array>
+</resources>

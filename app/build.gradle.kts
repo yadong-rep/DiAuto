@@ -11,6 +11,7 @@ plugins {
 
 android {
     compileSdk = 36
+    buildToolsVersion = "36.0.0"
     ndkVersion = "29.0.14206865"
     namespace = "com.andrerinas.openheadunit"
 
@@ -69,10 +70,10 @@ android {
     defaultConfig {
         // Preserve upgrade compatibility and existing DiLink pairing/calibration.
         applicationId = "com.andrerinas.headunitrevived"
-        minSdk = 16
+        minSdk = 21
         targetSdk = 36
-        versionCode = 111
-        versionName = "0.3.11"
+        versionCode = 112
+        versionName = "0.3.11-hongqi.1"
         setProperty("archivesBaseName", "${applicationId}_${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -239,6 +240,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
     implementation(project(":contract"))
+    implementation(project(":hongqi-feature"))
 
     // Multidex
     implementation("androidx.multidex:multidex:2.0.1")

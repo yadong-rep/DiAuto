@@ -32,6 +32,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        com.andrerinas.openheadunit.hongqi.HongqiBridge.install(this)
 
 
 

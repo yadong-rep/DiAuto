@@ -708,6 +708,8 @@ class AapService : Service(), UsbReceiver.Listener {
     // Lifecycle
     // -------------------------------------------------------------------------
 
+    private var hongqiAuthorizationRejected = false
+
     override fun onCreate() {
         super.onCreate()
         AppLog.i("AapService creating...")
@@ -721,6 +723,12 @@ class AapService : Service(), UsbReceiver.Listener {
             }
         } catch (e: Exception) {
             AppLog.e("ForegroundServiceStartNotAllowedException/Exception caught in onCreate: ${e.message}", e)
+            stopSelf()
+            return
+        }
+        if (!com.hongqi.flighting.integration.FeatureIntegration.isAuthorized(this)) {
+            hongqiAuthorizationRejected = true
+            stopForeground(true)
             stopSelf()
             return
         }
@@ -1090,6 +1098,7 @@ class AapService : Service(), UsbReceiver.Listener {
                     val keyEvent = mediaButtonEvent?.let { IntentCompat.getParcelableExtra(it, Intent.EXTRA_KEY_EVENT, android.view.KeyEvent::class.java) }
 
                     if (keyEvent != null) {
+                        if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(this@AapService, keyEvent)) return true
                         val actionStr = if (keyEvent.action == android.view.KeyEvent.ACTION_DOWN) "DOWN" else "UP"
                         AppLog.d("MediaButtonEvent: Received key ${keyEvent.keyCode} ($actionStr)")
 
@@ -1782,6 +1791,12 @@ class AapService : Service(), UsbReceiver.Listener {
     }
 
     override fun onDestroy() {
+        if (hongqiAuthorizationRejected) {
+            serviceScope.cancel()
+            stopForeground(true)
+            super.onDestroy()
+            return
+        }
         com.andrerinas.openheadunit.hud.BydNavigationOutputs.stop()
         AppLog.i("AapService destroying... (wakeLock held=${bootWakeLock?.isHeld == true})")
         isDestroying = true
@@ -1864,6 +1879,11 @@ class AapService : Service(), UsbReceiver.Listener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (hongqiAuthorizationRejected || !com.hongqi.flighting.integration.FeatureIntegration.isAuthorized(this)) {
+            stopForeground(true)
+            stopSelf()
+            return START_NOT_STICKY
+        }
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 startForeground(1, createNotification(),
