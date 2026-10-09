@@ -72,8 +72,8 @@ android {
         applicationId = "com.andrerinas.headunitrevived"
         minSdk = 21
         targetSdk = 36
-        versionCode = 112
-        versionName = "0.3.11-hongqi.1"
+        versionCode = 113
+        versionName = "0.3.11-hongqi.2"
         setProperty("archivesBaseName", "${applicationId}_${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -184,6 +184,10 @@ android {
     lint {
         abortOnError = false
         disable += "PackagedPrivateKey"
+    }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
     }
 
     compileOptions {

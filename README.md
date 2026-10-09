@@ -2,6 +2,8 @@
 
 本交付版本新增红旗飞屏、按键映射、侧边栏和统一激活授权。使用及构建见 [红旗移植说明](docs/HONGQI_INTEGRATION.md)，同步上游见 [更新指南](docs/HONGQI_UPSTREAM_SYNC.md)，验证结果见 [验证记录](docs/HONGQI_VALIDATION.md)。
 
+`0.3.11-hongqi.2` 修复竖屏首页启动闪退，见 [启动修复说明](docs/HONGQI_STARTUP_FIX.md)。
+
 **Android Auto on your BYD display. Wireless or USB.**
 
 > **BYD support scope:** These projects focus on BYD cars. They may work on other brands, but other brands are unsupported and there are no plans to add support or fix brand-specific incompatibilities.
