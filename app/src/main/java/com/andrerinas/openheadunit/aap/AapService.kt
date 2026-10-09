@@ -357,6 +357,10 @@ class AapService : Service(), UsbReceiver.Listener {
     private fun onAaMediaMetadataFromPhone(meta: MediaPlayback.MediaMetaData) {
         if (isDestroying) return
         lastAaMediaMetadata = meta
+        com.hongqi.flighting.integration.InstrumentContent.metadata(
+            meta.song, meta.artist, if(meta.hasAlbumArt()) meta.albumArt.toByteArray() else null,
+            if(meta.hasDurationSeconds()) meta.durationSeconds.protoUint32ToLong()*1000L else 0L,
+            android.os.SystemClock.elapsedRealtime())
         if (!App.provide(this).settings.syncMediaSessionWithAaMetadata) return
         // Avoid showing a previous track's art with new title/artist until decode finishes.
         cachedAaAlbumArtBitmap = null
@@ -369,6 +373,9 @@ class AapService : Service(), UsbReceiver.Listener {
             lastAaPlaybackPositionMs = status.playbackSeconds.protoUint32ToLong() * 1000L
         }
         val isPlayingFromStatus = resolveIsPlayingFromStatus(status)
+        com.hongqi.flighting.integration.InstrumentContent.playback(
+            if(status.hasPlaybackSeconds()) lastAaPlaybackPositionMs else null,
+            isPlayingFromStatus, android.os.SystemClock.elapsedRealtime())
         lastAaPlaybackIsPlaying = isPlayingFromStatus
         mediaSessionIsPlaying = isPlayingFromStatus
 
@@ -1164,6 +1171,12 @@ class AapService : Service(), UsbReceiver.Listener {
      * 4. Scheduling a reconnect attempt if applicable (see [scheduleReconnectIfNeeded])
      */
     private fun onDisconnected(state: CommManager.ConnectionState.Disconnected) {
+        com.andrerinas.openheadunit.hongqi.DiAutoVideoHub.requested = false
+        com.hongqi.flighting.integration.InstrumentContent.clear()
+        if(com.hongqi.flighting.service.ScreenCaptureService.isMirrorRunning()) {
+            startService(Intent(this, com.hongqi.flighting.service.ScreenCaptureService::class.java)
+                .setAction(com.hongqi.flighting.service.ScreenCaptureService.ACTION_STOP))
+        }
         com.andrerinas.openheadunit.hud.BydNavigationOutputs.stop()
         isSwitchingToAccessory.set(false)
         releaseWifiLock()
@@ -1791,6 +1804,11 @@ class AapService : Service(), UsbReceiver.Listener {
     }
 
     override fun onDestroy() {
+        com.hongqi.flighting.integration.InstrumentContent.clear()
+        if(com.hongqi.flighting.service.ScreenCaptureService.isMirrorRunning()) {
+            startService(Intent(this, com.hongqi.flighting.service.ScreenCaptureService::class.java)
+                .setAction(com.hongqi.flighting.service.ScreenCaptureService.ACTION_STOP))
+        }
         if (hongqiAuthorizationRejected) {
             serviceScope.cancel()
             stopForeground(true)

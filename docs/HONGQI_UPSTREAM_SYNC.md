@@ -50,3 +50,13 @@ bash scripts/sync-upstream.sh
 红旗模块本身不修改上游同名资源，通常可以整体保留。上游若修改连接服务、按键路径、Manifest或构建工具，仍需要人工解决冲突及回归验证，不能保证零冲突。
 
 发布版本使用 0.3.11-hongqi.2 / versionCode 113。以后合并新版本时保留上游版本含义，并保证你正式发布的 versionCode 高于已安装版本；不要直接用上游版本号替换个人发布序列。
+
+## 完整视频飞屏的新增同步点
+
+- `DiAutoVideoHub` 与 `DiAutoProjectionView`：单解码器的双输出、完整画面比例和独立渲染线程。
+- `VideoDecoder.instrumentDimensionsListener`：Activity 不在前台时仍更新仪表视频尺寸。
+- `AapProjectionActivity`：页面恢复时切换共享消费者、仪表运行时不释放共享输入、触摸坐标匹配完整视频黑边。
+- `AapNavigationHelper`：解析后的导航快照送入 `InstrumentContent`；停止导航要清除提示。
+- `AapService`：媒体回调在媒体会话同步开关之前更新卡片；断开时清空并停止飞屏。
+- `FeatureNavigation.Host`：视频连接/输出释放接口；`ScreenCaptureService` 只显示 DiAuto 视频，无录屏分支。
+- `signing/hongqi-debug.keystore` 仅供可重复覆盖安装的开发构建，正式发布继续使用自己的密钥。

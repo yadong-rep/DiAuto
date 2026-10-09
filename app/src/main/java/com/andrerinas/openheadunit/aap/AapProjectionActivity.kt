@@ -40,6 +40,8 @@ import com.andrerinas.openheadunit.utils.AppLog
 import com.andrerinas.openheadunit.utils.IntentFilters
 import com.andrerinas.openheadunit.view.IProjectionView
 import com.andrerinas.openheadunit.view.GlProjectionView
+import com.andrerinas.openheadunit.hongqi.DiAutoVideoHub
+import com.andrerinas.openheadunit.hongqi.DiAutoProjectionView
 import com.andrerinas.openheadunit.view.ProjectionView
 import com.andrerinas.openheadunit.view.TextureProjectionView
 import com.andrerinas.openheadunit.utils.Settings
@@ -465,8 +467,10 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
                 // discarded view would land after the replacement's onSurfaceChanged and release
                 // video focus for the new view's running stream.
                 projectionView.removeCallback(this)
-                videoDecoder.softwareYuvFrameSink = null
-                videoDecoder.stop(DecoderStopPolicy.REASON_PROJECTION_VIEW_RECREATE)
+                if(DiAutoVideoHub.current?.instrumentActive != true) {
+                    videoDecoder.softwareYuvFrameSink = null
+                    videoDecoder.stop(DecoderStopPolicy.REASON_PROJECTION_VIEW_RECREATE)
+                }
                 container.removeView(projectionView as View)
             }
             isSurfaceSet = false
@@ -580,7 +584,7 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
         val effectiveMode = forcedViewModeOverride ?: settings.viewMode
         // After a plain rebuild fails to stick, escalate away from a non-SurfaceView backend
         // (unless the bundled software HEVC decoder is active, which needs the GLES YUV sink).
-        val shouldFallBack = displayStallRecoveries >= 2 &&
+        val shouldFallBack = !DiAutoVideoHub.requested && displayStallRecoveries >= 2 &&
             effectiveMode != Settings.ViewMode.SURFACE &&
             !videoDecoder.usingBundledSoftwareHevc
         if (shouldFallBack) {
@@ -687,6 +691,11 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
     /** Rotate the rendering backend live (TextureView -> SurfaceView -> GLES) and rebuild, so the
      * user can find one that draws. Clears any stall-recovery override so the manual choice wins. */
     private fun cycleRenderer() {
+        if(DiAutoVideoHub.current?.instrumentActive == true) {
+            Toast.makeText(this,"请先停止飞屏，再切换中控视频渲染器",Toast.LENGTH_LONG).show()
+            return
+        }
+        DiAutoVideoHub.requested = false
         val order = listOf(Settings.ViewMode.TEXTURE, Settings.ViewMode.SURFACE, Settings.ViewMode.GLES)
         val current = forcedViewModeOverride ?: settings.viewMode
         val next = order[(order.indexOf(current).coerceAtLeast(0) + 1) % order.size]
@@ -968,6 +977,9 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
         super.onResume()
         isForeground = true
         AppLog.i("AapProjectionActivity: onResume")
+        if(DiAutoVideoHub.requested && ::projectionView.isInitialized && projectionView !is DiAutoProjectionView) {
+            recreateProjectionView()
+        }
         // Show the one-time rename notice even here, on top of an active projection.
         RenameNotice.maybeShow(this, App.provide(this).settings)
         applyStickyOrientation()
@@ -1595,6 +1607,11 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
     }
 
     override fun onSurfaceDestroyed(surface: android.view.Surface) {
+        val hub = DiAutoVideoHub.current
+        if(hub != null && surface === hub.input && (hub.instrumentActive || hub.mainActive)) {
+            isSurfaceSet = false
+            return
+        }
         // A relaunched instance may already own the decoder: on a singleTask relaunch the old
         // instance's surface teardown is framework-ordered after its onDestroy, and for the GLES
         // backend one main-looper post later still, so it lands after the new instance's
@@ -1627,6 +1644,23 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
         val videoW = HeadUnitScreenConfig.getNegotiatedWidth()
         val videoH = HeadUnitScreenConfig.getNegotiatedHeight()
 
+        if(projectionView is DiAutoProjectionView) {
+            val view = projectionView as View
+            if(view.width <= 0 || view.height <= 0 || videoW <= 0 || videoH <= 0) return
+            val scale = DiAutoVideoHub.fit(videoW,videoH,view.width,view.height)
+            val renderedW = view.width * scale.first
+            val renderedH = view.height * scale.second
+            val left = (view.width-renderedW)/2f
+            val top = (view.height-renderedH)/2f
+            val pointers = (0 until event.pointerCount).map { index ->
+                val x = if(settings.hudMirroring) view.width-event.getX(index) else event.getX(index)
+                Triple(event.getPointerId(index),
+                    ((x-left)/renderedW*videoW).toInt().coerceIn(0,videoW),
+                    ((event.getY(index)-top)/renderedH*videoH).toInt().coerceIn(0,videoH))
+            }
+            commManager.send(TouchEvent(ts,action,event.actionIndex,pointers))
+            return
+        }
         if (videoW <= 0 || videoH <= 0 || projectionView !is View) {
             AppLog.w("sendTouchEvent: Ignoring touch, screen config or view not ready.")
             return
@@ -1862,7 +1896,12 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
                 "model=${Build.MODEL} API=${Build.VERSION.SDK_INT}"
         )
 
-        if (mode == Settings.ViewMode.TEXTURE) {
+        if (DiAutoVideoHub.requested) {
+            projectionView = DiAutoProjectionView(this).apply {
+                layoutParams = FrameLayout.LayoutParams(-1, -1)
+            }
+            container.setBackgroundColor(Color.BLACK)
+        } else if (mode == Settings.ViewMode.TEXTURE) {
             AppLog.i("Using TextureView")
             val textureView = TextureProjectionView(this)
             textureView.layoutParams = FrameLayout.LayoutParams(
@@ -1893,7 +1932,7 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
 
         val view = projectionView as View
         container.addView(view)
-        videoDecoder.softwareYuvFrameSink = projectionView as? SoftwareYuvFrameSink
+        videoDecoder.softwareYuvFrameSink = if(projectionView is DiAutoProjectionView) DiAutoVideoHub.instance else projectionView as? SoftwareYuvFrameSink
         if (videoDecoder.softwareYuvFrameSink != null) {
             AppLog.i("Using GLES YUV sink for bundled software HEVC")
         }

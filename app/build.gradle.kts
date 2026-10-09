@@ -72,8 +72,8 @@ android {
         applicationId = "com.andrerinas.headunitrevived"
         minSdk = 21
         targetSdk = 36
-        versionCode = 113
-        versionName = "0.3.11-hongqi.2"
+        versionCode = 114
+        versionName = "0.3.11-hongqi.3"
         setProperty("archivesBaseName", "${applicationId}_${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -104,6 +104,11 @@ android {
 
     signingConfigs {
         getByName("debug") {
+            // Public development key, never used by release builds.
+            storeFile = rootProject.file("signing/hongqi-debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
             // storeFile = file("../keystore.jkc")
             // storePassword = property("HEADUNIT_KEYSTORE_PASSWORD") as String
             // keyAlias = property("HEADUNIT_KEYSTORE_ALIAS") as String

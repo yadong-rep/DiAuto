@@ -14,7 +14,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.hardware.display.DisplayManager;
-import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -347,48 +346,6 @@ public class HongqiFeatureActivity extends AppCompatActivity {
         }
     };
 
-    // 权限请求
-    private final ActivityResultLauncher<Intent> projectionLauncher = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(),
-        result -> {
-            if (!ensureClusterMirrorSupported()) {
-                pendingProjectionToken = -1;
-                return;
-            }
-            int projectionToken = pendingProjectionToken;
-            pendingProjectionToken = -1;
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                if (serviceBound && captureService != null) {
-                    InAppLogger.i(TAG, "屏幕录制权限已授权，开始通知本地镜像服务");
-                    Intent start = new Intent(this, ScreenCaptureService.class)
-                        .setAction(ScreenCaptureService.ACTION_START_GRANTED)
-                        .putExtra(ScreenCaptureService.EXTRA_RESULT_CODE, result.getResultCode())
-                        .putExtra(ScreenCaptureService.EXTRA_RESULT_DATA, result.getData())
-                        .putExtra(ScreenCaptureService.EXTRA_SESSION_TOKEN, projectionToken);
-                    try {
-                        androidx.core.content.ContextCompat.startForegroundService(this, start);
-                    } catch (RuntimeException e) {
-                        captureService.cancelPendingStart(projectionToken);
-                        InAppLogger.e(TAG, "无法启动投屏服务", e);
-                        Toast.makeText(this, "无法启动投屏，请重试", Toast.LENGTH_LONG).show();
-                    }
-                    updateStatus();
-                } else {
-                    InAppLogger.e(TAG, "屏幕录制权限已授权，但服务未连接");
-                    Toast.makeText(this, "服务连接失败", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                if (captureService != null && projectionToken >= 0) {
-                    captureService.cancelPendingStart(projectionToken);
-                }
-                InAppLogger.w(TAG, "用户或系统拒绝了屏幕录制权限");
-                Toast.makeText(this, "屏幕录制权限被拒绝", Toast.LENGTH_SHORT).show();
-                configManager.setEnabled(false);
-                switchEnabled.setChecked(false);
-            }
-        }
-    );
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -406,8 +363,9 @@ public class HongqiFeatureActivity extends AppCompatActivity {
 
 initViews();
         loadConfig();
-        autoDownloadDefaultImages();
+
         setupListeners();
+        installDiAutoFlightPanel();
         applyClusterMirrorCapabilityState();
         handleAutoStartIntent(getIntent());
     }
@@ -431,6 +389,30 @@ initViews();
             intent.removeExtra(ScreenCaptureService.EXTRA_AUTO_START);
             handler.postDelayed(this::startCapture, 250);
         }
+    }
+
+    private final Handler flightStatusHandler = new Handler(Looper.getMainLooper());
+    private TextView flightStatus;
+    private final Runnable flightStatusUpdate = new Runnable() {
+        @Override public void run() {
+            if(flightStatus==null || isFinishing()) return;
+            flightStatus.setText(ScreenCaptureService.isMirrorRunning() ? "状态：飞屏中" : "状态：已停止");
+            flightStatusHandler.postDelayed(this,1000);
+        }
+    };
+    private void installDiAutoFlightPanel() {
+        android.view.ViewGroup parent=(android.view.ViewGroup)layoutCastHome;
+        parent.removeAllViews();
+        LinearLayout panel=new LinearLayout(this);panel.setOrientation(LinearLayout.VERTICAL);
+        TextView title=new TextView(this);title.setText("DiAuto 完整视频");title.setTextSize(28);title.setTextColor(0xffeeeeee);panel.addView(title);
+        TextView detail=new TextView(this);detail.setText("完整显示 DiAuto 视频，保持原始比例。\n\n导航提示：转向箭头、距离、道路名称。\n音乐：歌曲、歌手、封面、播放状态与进度。\n\n请先连接手机并开启原车导航仪表投屏。");detail.setTextColor(0xffcccccc);detail.setTextSize(18);panel.addView(detail);
+        flightStatus=new TextView(this);flightStatus.setTextColor(0xffeeeeee);panel.addView(flightStatus);
+        Button start=new Button(this);start.setText("开始飞屏");start.setOnClickListener(v->startCapture());panel.addView(start);
+        Button stop=new Button(this);stop.setText("停止飞屏");stop.setOnClickListener(v->stopCapture());panel.addView(stop);
+        Switch preview=new Switch(this);preview.setText("模拟器预览（显示 DiAuto 视频）");preview.setTextColor(0xffeeeeee);
+        preview.setChecked(configManager.isSimulatorPreview());preview.setOnCheckedChangeListener((button,checked)->configManager.setSimulatorPreview(checked));panel.addView(preview);
+        parent.addView(panel,new android.view.ViewGroup.LayoutParams(-1,-2));
+        flightStatusHandler.post(flightStatusUpdate);
     }
 
     private void initViews() {
@@ -2511,25 +2493,18 @@ private void startCapture() {
         }
 
         if (!captureService.beginStart()) {
-            InAppLogger.w(TAG, "本地镜像已在运行或启动中：" + captureService.getDebugState());
-            Toast.makeText(this, "镜像已在运行或启动中", Toast.LENGTH_SHORT).show();
+            InAppLogger.w(TAG, "本地飞屏已在运行或启动中：" + captureService.getDebugState());
+            Toast.makeText(this, "飞屏已在运行或启动中", Toast.LENGTH_SHORT).show();
             return;
         }
-        pendingProjectionToken = captureService.getActiveToken();
-        InAppLogger.i(TAG, "已请求启动前台 ScreenCaptureService，授权 token=" + pendingProjectionToken);
-
-        // 请求屏幕录制权限
-        MediaProjectionManager projectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-        Intent captureIntent = Build.VERSION.SDK_INT >= 34
-            ? projectionManager.createScreenCaptureIntent(android.media.projection.MediaProjectionConfig.createConfigForDefaultDisplay())
-            : projectionManager.createScreenCaptureIntent();
-
-        // 保存当前启用状态
-        configManager.setEnabled(true);
-        switchEnabled.setChecked(true);
-
-        projectionLauncher.launch(captureIntent);
-        InAppLogger.i(TAG, "已打开屏幕录制权限请求界面");
+        Intent start = new Intent(this, ScreenCaptureService.class).setAction(ScreenCaptureService.ACTION_START);
+        try { androidx.core.content.ContextCompat.startForegroundService(this,start); }
+        catch(RuntimeException e) {
+            captureService.cancelPendingStart(captureService.getActiveToken());
+            InAppLogger.e(TAG,"无法启动 DiAuto 飞屏",e);
+            Toast.makeText(this,"无法启动飞屏，请查看日志",Toast.LENGTH_LONG).show();
+        }
+        updateStatus();
     }
 
     private void stopCapture() {
@@ -2544,7 +2519,7 @@ private void startCapture() {
         switchEnabled.setChecked(false);
         updateStatus();
         refreshLogs();
-        Toast.makeText(this, "镜像已停止", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "飞屏已停止", Toast.LENGTH_SHORT).show();
     }
 
     private int clamp(int value, int min, int max) {
@@ -2757,7 +2732,7 @@ private void startCapture() {
         builder.append("=== 当前状态 ===\n");
         builder.append("serviceBound=").append(serviceBound).append('\n');
         builder.append("captureService=").append(captureService != null ? captureService.getDebugState() : "null").append('\n');
-        builder.append("说明: 停止后 virtualDisplay/presentation/mediaProjection/activeSurface 都应为 false/null。\n\n");
+        builder.append("说明: 停止后仪表视频输出和独立卡片应全部关闭。\n\n");
 
         builder.append("=== App关键日志 ===\n");
         builder.append(InAppLogger.dump()).append("\n\n");
@@ -2843,6 +2818,7 @@ private void startCapture() {
         handler.removeCallbacksAndMessages(null);
         KeyMappingManager.cancelLearningDoubleTapCast(this);
         KeyMappingManager.cancelLearning(this);
+        flightStatusHandler.removeCallbacks(flightStatusUpdate);
         super.onDestroy();
     }
 }

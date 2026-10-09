@@ -8,7 +8,7 @@
 
     
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+
 
     
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -49,7 +49,7 @@
         <activity android:name="com.hongqi.flighting.ui.HongqiFeatureActivity" android:exported="false" android:theme="@style/hongqi_Theme" android:launchMode="singleTop">
             </activity>
 
-        <service android:name="com.hongqi.flighting.service.ScreenCaptureService" android:foregroundServiceType="mediaProjection" android:exported="false" />
+        <service android:name="com.hongqi.flighting.service.ScreenCaptureService" android:foregroundServiceType="specialUse" android:exported="false"><property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="User-enabled DiAuto video output and navigation/media panels on automotive instrument display" /></service>
 
         
         <service android:name="com.hongqi.flighting.mapping.KeyMappingAccessibilityService" android:enabled="true" android:exported="true" android:label="@string/hongqi_key_mapping_service_label" android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">

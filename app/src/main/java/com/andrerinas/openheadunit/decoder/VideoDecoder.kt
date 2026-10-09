@@ -338,6 +338,8 @@ class VideoDecoder(
     private var legacyFrameBuffer: ByteArray? = null
 
     var dimensionsListener: VideoDimensionsListener? = null
+    var instrumentDimensionsListener: ((Int, Int) -> Unit)? = null
+    fun streamDimensions(): Pair<Int, Int> = synchronized(this) { mWidth to mHeight }
     var onFpsChanged: ((Int) -> Unit)? = null
     var softwareYuvFrameSink: SoftwareYuvFrameSink? = null
     private var frameCount = 0
@@ -481,6 +483,7 @@ class VideoDecoder(
             AppLog.i("Video dimensions changed via format: ${newWidth}x$newHeight")
             mWidth = newWidth
             mHeight = newHeight
+            instrumentDimensionsListener?.invoke(mWidth, mHeight)
             dimensionsListener?.onVideoDimensionsChanged(mWidth, mHeight)
         }
         try {
@@ -783,6 +786,7 @@ class VideoDecoder(
                              AppLog.i("Fallback to negotiated dimensions: ${negotiatedW}x${negotiatedH}")
                              mWidth = negotiatedW
                              mHeight = negotiatedH
+                             instrumentDimensionsListener?.invoke(mWidth, mHeight)
                              dimensionsListener?.onVideoDimensionsChanged(mWidth, mHeight)
                          }
                     }
@@ -1197,6 +1201,7 @@ class VideoDecoder(
         AppLog.i("${type.settingsValue} SPS parsed: ${width}x$height (negotiated $negotiated)")
         mWidth = width
         mHeight = height
+        instrumentDimensionsListener?.invoke(mWidth, mHeight)
         dimensionsListener?.onVideoDimensionsChanged(mWidth, mHeight)
     }
 

@@ -68,6 +68,23 @@ class AapNavigationHelper(
     @Suppress("DEPRECATION") // Single bridge: legacy nextEventType/turnSide → NavigationUpdateIntent
     fun sendFullNavigationBroadcast(snapshot: NavigationSnapshot, navEventType: Int) {
         val prepared = prepareFullNavigationMessage(snapshot, navEventType)
+        val event = prepared.nextEventType
+        val left = prepared.turnSide == LegacySide.LEFT.number
+        val arrow = when(event) {
+            LegacyNextEvent.U_TURN.number -> if(left) "↶" else "↷"
+            LegacyNextEvent.TURN.number, LegacyNextEvent.SHARP_TURN.number -> if(left) "←" else "→"
+            LegacyNextEvent.SLIGHT_TURN.number, LegacyNextEvent.FORK.number,
+            LegacyNextEvent.ON_RAMP.number, LegacyNextEvent.OFFRAMP.number,
+            LegacyNextEvent.MERGE.number -> if(left) "↖" else "↗"
+            LegacyNextEvent.ROUNDABOUT_ENTER.number, LegacyNextEvent.ROUNDABOUT_EXIT.number,
+            LegacyNextEvent.ROUNDABOUT_ENTER_AND_EXIT.number -> "⟳"
+            LegacyNextEvent.DESTINATION.number -> "⚑"
+            LegacyNextEvent.STRAIGHT.number, LegacyNextEvent.DEPART.number -> "↑"
+            else -> "—"
+        }
+        com.hongqi.flighting.integration.InstrumentContent.navigation(
+            com.hongqi.flighting.integration.InstrumentContent.Navigation(navEventType != 2,
+                arrow, prepared.actionText, prepared.road, prepared.distanceMeters))
         val intent = NavigationUpdateIntent(
             distanceMeters = prepared.distanceMeters,
             timeSeconds = prepared.timeSeconds,

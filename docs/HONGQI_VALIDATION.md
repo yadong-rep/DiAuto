@@ -1,40 +1,37 @@
-# 红旗移植验证记录
+# DiAuto 完整视频飞屏验证（0.3.11-hongqi.3）
 
-当前版本 `0.3.11-hongqi.2` 的启动修复和重新验证结果见
-[HONGQI_STARTUP_FIX.md](HONGQI_STARTUP_FIX.md)。以下保留 `.1` 的历史构建记录，
-这些记录未覆盖后来发现的竖屏首页缺失控件问题；不要继续使用 `.1` APK。
+## 结果
 
-验证时间：2026-10-08T23:28:13+08:00
+Debug 与 Release 构建成功，Release 通过 R8 与 lintVital。共 709 项测试通过：宿主 655 项，红旗模块 54 项，0 失败、0 错误。保留并回归了首页横/竖屏入口检查；新增完整视频比例、飞屏页面启动、媒体进度/暂停、重复元数据、换歌清除封面与断开清空的测试。
 
-版本：0.3.11-hongqi.1 / versionCode 112。
+验证命令：
 
-## 构建及测试
+```bash
+./gradlew --no-daemon --max-workers=2 :app:assembleGithubDebug :app:assembleGithubRelease :app:testGithubDebugUnitTest :hongqi-feature:testDebugUnitTest
+python scripts/check-home-layouts.py
+git diff --check
+```
 
-| 检查 | 结果 |
-|---|---|
-| `hongqi-feature:testDebugUnitTest` | 47 项通过；失败 0、错误 0、跳过 0 |
-| `app:testGithubDebugUnitTest` | 650 项通过；失败 0、错误 0、跳过 0 |
-| `app:assembleGithubDebug` | 通过，生成签名 Debug APK |
-| `app:assembleGithubRelease` | 通过，包含 R8 混淆、资源压缩及原有 native 库；生成未签名 Release APK |
-| 合并 Manifest | Debug/Release：minSdk 21、原 DiAuto 启动页、红旗平台识别 Ability、私有授权/功能页面和前台服务类型均核对通过 |
-| APK 完整性 | 两个 APK 的 ZIP/CRC、Manifest、DEX 和 libusbhelper.so 存在性通过 |
-| 同步脚本 | `bash -n scripts/sync-upstream.sh` 通过；Git 共同祖先检查见交付检查记录 |
+APK 已检查 ZIP 完整性、版本和 Debug 签名；合并 Manifest 不含 MediaProjection 权限或服务类型，飞屏服务为 specialUse。版本号为 114，最低 API 21，目标 API 36。
 
-## APK 构建记录
+## APK
 
-| 构建 | 文件名 | 字节数 | SHA-256 |
+| 构建 | 文件 | 字节数 | SHA-256 |
 |---|---|---:|---|
-| debug | `com.andrerinas.headunitrevived.bydhudtest_0.3.11-hongqi.1-hud-test_debug.apk` | 20058076 | `577928cb005792177b1ec0a6cbec545552f665429d8602a279b8cbacd0319a02` |
-| release | `com.andrerinas.headunitrevived_0.3.11-hongqi.1.apk` | 12840138 | `54efb2be8ba976ff53c11adbef8d3518d94136482b31be3194840185d1eb9af3` |
+| Release（未签名） | `com.andrerinas.headunitrevived_0.3.11-hongqi.3.apk` | 12823594 | `9fb99c952efc8c0af3ea87cc36ad4447cc0b9500781b8fdf3660a502a955923d` |
+| Debug（已签名） | `com.andrerinas.headunitrevived.bydhudtest_0.3.11-hongqi.3-hud-test_debug.apk` | 20799299 | `5ddc43c51e88095aa3e2e1eab63772b65fd74db68bfddf446c2096f8ea8e3e8c` |
 
-交付包的 `APK` 目录包含对应 Debug 测试包及未签名 Release 包。Debug 包沿用调试豁免、不要求激活；Release 需要使用你自己的正式密钥签名。源项目未提供发布密钥，归档不会生成或携带你的发布密钥。
+Debug 使用项目中的公开开发密钥，便于后续重建覆盖升级。其证书与之前的 .2 Debug 包不同，首次更新可能需要卸载旧 Debug 包（会清空该包的设置）。正式发布继续用自己的私有发布密钥；未签名 Release 不能直接安装。
 
-## 自动验证范围
+## 设备验证范围
 
-保留并运行原项目 650 项测试；红旗模块运行 47 项测试，覆盖显示屏策略、资源发布/停止竞态、过期回调、授权状态/离线宽限、按键扫描码学习/重复消费、映射到宿主以及禁止旧投屏权限自动复用。
+没有连接真实红旗仪表或用户的木木模拟器。自动测试没有验证 EGL/MediaCodec 在这些设备上的双屏输出、帧率、窗口覆盖层级或原车导航恢复，不能据此承诺实车稳定性。
 
-最终完整构建结果为 BUILD SUCCESSFUL。原项目已有 API 弃用及 Gradle 9 迁移警告；本交付使用 Gradle 8.13 与 AGP 8.13.2。
+建议实机验收：
 
-## 仍需实机确认
-
-没有连接红旗车机或真实仪表显示屏，因此未执行实车飞屏、方向盘事件接收、窗口覆盖层级、熄屏唤醒及停止后原车导航恢复测试。授权后台未提供测试账号，也未发送测试设备注册或激活请求；客户端协议按附件保留。具体步骤见 HONGQI_INTEGRATION.md。
+1. 连接手机的 AA 会话，打开原车仪表导航投屏，再启动 DiAuto 飞屏。视频应完整显示、比例正确；不会弹录屏授权。
+2. 退出红旗设置、回到中控投影、切换应用和旋转屏幕，确认仪表持续显示，中控触摸准确；主屏 HUD 镜像不改变仪表方向。
+3. 导航开始/停止、左/右转、环岛与目的地，确认箭头、距离和道路正确；停止后清空提示。
+4. 切歌、带/不带封面、暂停/恢复和拖动播放进度，确认独立音乐卡片更新，不继承旧封面和进度；关闭媒体会话同步设置后卡片仍能更新。
+5. 反复启动/停止、手机断开/重连、仪表移除和熄屏，确认清理窗口、无旧回调重开，停止后原车导航恢复。
+6. 木木需显式开启模拟器预览并连接手机，预览展示同一视频和卡片；可点“停止预览”。只有模拟器而没有 AA 视频输入时，飞屏会拒绝启动。

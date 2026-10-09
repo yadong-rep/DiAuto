@@ -8,15 +8,19 @@
 - Android Auto 已连接：打开投影页面原有的退出/快捷操作菜单，选择同名入口。
 - 红旗功能页：飞屏、按键映射、启动、侧边栏四个标签页；顶部「返回 DiAuto」返回主项目，已有 AA 连接可继续使用。
 
-## 飞屏
+## 飞屏（0.3.11-hongqi.3）
 
-保留附件中的实现：MediaProjection 采集主屏，OpenGL 合成最多三个区域，通过 VirtualDisplay 和 Presentation 在仪表显示；模拟预览保留录制 MP4 的路径。支持屏幕裁剪、比例/输出宽度、图片、音乐封面及歌词等现有配置。
+默认且唯一的飞屏源为 **DiAuto 完整视频**。已经删除中控录屏/MediaProjection、VirtualDisplay 镜像、裁剪合成器和 MP4 录制实现；飞屏页不再提供裁剪、图片或本地音乐源。旧配置不会影响新的视频与卡片布局。
 
-本版本不包含 RTP/GWRtpService 控制，也没有新增 VHAL 操作。它沿用附件的 `PresentationScreen` 显示屏选择规则。实车必须先开启原车导航仪表投屏，系统能够提供这个非主屏显示设备；普通手机或没有该显示设备的车机不能据此判断实车功能是否正常。模拟预览用于检查合成结果。
+仪表左侧 75% 显示完整 Android Auto 视频，按原始比例适配并允许黑边；右侧 25% 为独立导航与音乐卡片。视频由 DiAuto 的同一套 MediaCodec/软件 HEVC 解码输出，经独立 EGL 线程送往仪表和中控，不从主屏取像素。进入飞屏后，中控切换到共享视频消费者；离开页面时不会停掉仍供仪表使用的解码器。
 
-每次新的飞屏会话均请求新的屏幕录制授权，不再把含 Binder 的录屏授权 Intent 写入磁盘。Android 14+ 请求完整默认显示屏，并在用户授权后才启动 mediaProjection 前台服务。投屏权限和应用激活授权是两种不同授权。
+导航卡片直接接收 DiAuto 解析后的导航快照，显示转向箭头、到下一动作的距离、动作和道路。音乐卡片直接接收 AA 媒体元数据和播放状态，显示歌曲、歌手、封面、状态和进度，不依赖“同步媒体会话”开关。播放中按单调时钟推进进度，暂停时冻结，换歌清除旧进度/封面；导航停止和手机断开清除相应提示。
 
-启动 OpenGL 的等待、停止渲染线程与录制线程的等待在独立工作线程执行。资源状态仍经过 IDLE → STARTING → RUNNING → STOPPING → IDLE；停止清理未完成时拒绝开始新会话，过期 token 不得重新发布资源。
+飞屏需要已连接的 Android Auto 会话，以及车机的非主屏 `PresentationScreen`。仍需先开启原车导航仪表投屏以获得这个显示设备。窗口使用悬浮窗权限，服务使用 `specialUse` 前台服务，已经移除录屏权限和录屏授权弹窗。
+
+模拟器预览是用户显式开启的主屏窗口，显示同一个 DiAuto 视频和卡片，带“停止预览”按钮；不会创建录屏或 MP4。模拟器本身不提供 AA 视频，必须先连接手机。没有新增 RTP/GWRtpService 或 VHAL 控制。
+
+停止时先同步移除 EGL 输出，再关闭仪表窗口和封面线程。断开手机、仪表移除/关闭或授权失效会停止飞屏；应用/服务重启不会自动复用上一会话。
 
 ## 按键映射
 
@@ -48,8 +52,8 @@ Application ID 继续使用 DiAuto 的 `com.andrerinas.headunitrevived`；Debug 
 
 ## 模块边界
 
-- `hongqi-feature`：所有红旗 Java 代码、资源、服务、授权页面、资源状态机和测试。
-- `app/.../hongqi/HongqiBridge.kt`：唯一宿主适配实现，提供主页面 Intent 和向手机发送媒体动作。
+- `hongqi-feature`：所有红旗 Java 代码、资源、服务、授权页面、卡片数据、显示策略和测试。
+- `app/.../hongqi/HongqiBridge.kt`：唯一宿主适配实现，提供主页面 Intent、向手机发送媒体动作，以及 DiAuto 视频输出的连接/释放。
 - `FeatureNavigation.Host`：宿主接口。功能模块不引用 DiAuto 类，也不依赖 `:app`。
 - `FeatureIntegration`：生命周期授权、功能入口及统一按键接入。
 
@@ -57,7 +61,7 @@ Application ID 继续使用 DiAuto 的 `com.andrerinas.headunitrevived`；Debug 
 
 ## 构建
 
-需要 JDK 17、Android SDK 36、Build Tools 36.0.0、NDK 29.0.14206865、CMake 3.22.1。最低 Android 版本为 5.0 / API 21（原红旗功能本就依赖 MediaProjection）。补回了附件缺失的 `contract` 模块和 Gradle wrapper；contract 与宿主编译 SDK 对齐。
+需要 JDK 17、Android SDK 36、Build Tools 36.0.0、NDK 29.0.14206865、CMake 3.22.1。最低 Android 版本为 5.0 / API 21。补回了附件缺失的 `contract` 模块和 Gradle wrapper；contract 与宿主编译 SDK 对齐。
 
 解压后用 Android Studio 打开根目录，配置本机 SDK。归档不携带开发环境的 `local.properties`。保留原发布签名配置，使用你自己的原有签名密钥。
 
@@ -72,8 +76,8 @@ Windows 使用 `gradlew.bat`。Release 未配置签名时输出未签名 APK；�
 
 1. Release 首次启动进入授权页，激活成功返回 DiAuto；禁用设备不能通过后台启动 AA 或红旗服务。
 2. 无线及USB Android Auto 原有功能正常；已连接状态能从投影菜单进入红旗配置。
-3. 开启原车导航仪表投屏，再在红旗页启动飞屏；检查主屏与仪表的裁剪、缩放和各区域显示。
-4. 连续启动/停止、录屏授权取消、仪表显示移除、熄屏/唤醒：无界面卡住、旧 token 重启或残留覆盖层；停止后原车导航能够恢复。
+3. 开启原车导航仪表投屏，再在红旗页启动飞屏；检查主屏和仪表显示同一个完整视频，视频无裁剪；导航和音乐卡片独立更新。
+4. 连续启动/停止、手机断开、仪表显示移除、熄屏/唤醒：无界面卡住、旧窗口重启或残留覆盖层；停止后原车导航能够恢复。
 5. 按键学习保留扫描码；同一按键只执行一次；未映射按键仍由 DiAuto 处理。分别测试本地音乐目标和 DiAuto/手机音乐目标。
 6. 侧边栏开启/关闭、应用切换、权限取消及重启恢复；后台播放时控制正确目标应用。
 
