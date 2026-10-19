@@ -11,6 +11,7 @@ plugins {
 
 android {
     compileSdk = 36
+    buildToolsVersion = "36.0.0"
     ndkVersion = "29.0.14206865"
     namespace = "com.andrerinas.openheadunit"
 
@@ -103,6 +104,11 @@ android {
 
     signingConfigs {
         getByName("debug") {
+            // Public development key, never used by release builds.
+            storeFile = rootProject.file("signing/hongqi-debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
             // storeFile = file("../keystore.jkc")
             // storePassword = property("HEADUNIT_KEYSTORE_PASSWORD") as String
             // keyAlias = property("HEADUNIT_KEYSTORE_ALIAS") as String
@@ -185,6 +191,10 @@ android {
         disable += "PackagedPrivateKey"
     }
 
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -239,6 +249,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
     implementation(project(":contract"))
+    implementation(project(":hongqi-feature"))
 
     // Multidex
     implementation("androidx.multidex:multidex:2.0.1")

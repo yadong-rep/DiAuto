@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="hongqi_background">#08090D</color>
+    <color name="hongqi_surface">#14151C</color>
+    <color name="hongqi_surface_high">#1D1A20</color>
+    <color name="hongqi_surface_glass">#CC171821</color>
+    <color name="hongqi_title">#F6E7C3</color>
+    <color name="hongqi_subtitle">#AFA7A0</color>
+    <color name="hongqi_section_title">#F3D58A</color>
+    <color name="hongqi_text">#F3F0EA</color>
+    <color name="hongqi_muted_text">#AAA29A</color>
+    <color name="hongqi_status">#D9B46A</color>
+    <color name="hongqi_divider">#2C2523</color>
+    <color name="hongqi_brand_red">#B5121B</color>
+    <color name="hongqi_brand_red_dark">#5E070D</color>
+    <color name="hongqi_brand_gold">#D9B46A</color>
+    <color name="hongqi_brand_gold_soft">#4DD9B46A</color>
+    <color name="hongqi_start_button">#B5121B</color>
+    <color name="hongqi_stop_button">#7C1218</color>
+    <color name="hongqi_save_button">#D9B46A</color>
+</resources>

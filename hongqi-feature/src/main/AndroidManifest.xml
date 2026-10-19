@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+
+    
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    
+    <uses-permission android:name="android.permission.READ_LOGS" tools:ignore="ProtectedPermissions" />
+
+    
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" tools:ignore="ProtectedPermissions" />
+
+    
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+
+    
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application android:networkSecurityConfig="@xml/hongqi_network_security_config">
+
+        
+        <activity android:name="com.hongqi.flighting.ui.HongqiFeatureActivity" android:exported="false" android:theme="@style/hongqi_Theme" android:launchMode="singleTop">
+            </activity>
+
+        <service android:name="com.hongqi.flighting.service.ScreenCaptureService" android:foregroundServiceType="specialUse" android:exported="false"><property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="User-enabled DiAuto video output and navigation/media panels on automotive instrument display" /></service>
+
+        
+        <service android:name="com.hongqi.flighting.mapping.KeyMappingAccessibilityService" android:enabled="true" android:exported="true" android:label="@string/hongqi_key_mapping_service_label" android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/hongqi_key_mapping_accessibility" />
+        </service>
+
+        
+        <service android:name="com.hongqi.flighting.mapping.TargetMediaSessionService" android:enabled="true" android:exported="true" android:label="@string/hongqi_key_mapping_media_service_label" android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        
+        <service android:name="com.hongqi.flighting.sidebar.SidebarService" android:exported="false" android:foregroundServiceType="specialUse"><property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="User-enabled automotive sidebar overlay with app shortcuts and accessibility controls" /></service>
+
+        
+        <receiver android:name="com.hongqi.flighting.autostart.BootReceiver" android:enabled="true" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        
+        <receiver android:name="com.hongqi.flighting.autostart.AppAutoStartReceiver" android:enabled="true" android:exported="false" />
+
+    <activity android:name="com.hongqi.flighting.ui.ActivationActivity" android:exported="false" android:launchMode="singleTop" android:theme="@style/hongqi_Theme" /><meta-data android:name="Group" android:value="GROUP AUTOMAP" /><meta-data android:name="Domain" android:value="DOMAIN AUTOMAP" /><meta-data android:name="Ability" android:value="com.hongqi.flighting.ui.HongqiFeatureActivity" /><meta-data android:name="MoreApp" android:value="true" /></application>
+
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" /><uses-permission android:name="android.permission.POST_NOTIFICATIONS" /><uses-feature android:name="android.hardware.camera" android:required="false" /></manifest>

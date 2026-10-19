@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="hongqi_Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/hongqi_brand_red</item>
+        <item name="colorPrimaryVariant">@color/hongqi_background</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/hongqi_brand_gold</item>
+        <item name="colorOnSecondary">#101014</item>
+        <item name="android:statusBarColor">@color/hongqi_background</item>
+        <item name="android:navigationBarColor">@color/hongqi_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textColorPrimary">@color/hongqi_text</item>
+        <item name="android:textColorSecondary">@color/hongqi_subtitle</item>
+        <item name="android:textColorHint">@color/hongqi_subtitle</item>
+        <item name="android:editTextColor">@color/hongqi_text</item>
+        <item name="colorControlNormal">@color/hongqi_brand_gold</item>
+        <item name="colorControlActivated">@color/hongqi_brand_gold</item>
+        <item name="colorOnSurface">@color/hongqi_text</item>
+        <item name="android:disabledAlpha">1.0</item>
+    </style>
+</resources>

@@ -90,6 +90,12 @@
         android:localeConfig="@xml/locales_config"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <!-- Desay app recognition must launch the host, not the private feature Activity. -->
+        <meta-data
+            android:name="Ability"
+            android:value="com.andrerinas.openheadunit.main.MainActivity"
+            tools:replace="android:value" />
+
         <activity
             android:name=".aap.AapProjectionActivity"
             android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize"

@@ -88,3 +88,6 @@ docs/TELEGRAM_ANNOUNCEMENTS.md
 
 # oh-my-claudecode local state
 .omc/
+
+# Public development certificate used only by Hongqi debug builds.
+!signing/hongqi-debug.keystore

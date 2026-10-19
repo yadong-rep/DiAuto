@@ -907,6 +907,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(this, event)) return true
         AppLog.i("dispatchKeyEvent: keyCode=%d, action=%d", event.keyCode, event.action)
         
         // Always give the KeymapFragment (if active) a chance to see the key

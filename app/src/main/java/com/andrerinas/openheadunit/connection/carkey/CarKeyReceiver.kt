@@ -35,6 +35,7 @@ interface CarKeyReceiver {
     /** Single key press or release — broadcasts for learning and projection handling. */
 
     private fun handleKey(context: Context, commManager: CommManager, keyCode: Int, isDown: Boolean) {
+        if (com.hongqi.flighting.integration.FeatureIntegration.handleKey(context, keyCode, isDown)) return
         AppLog.d("CarKeyReceiver: Broadcasting key event: code=$keyCode, isDown=$isDown")
         context.sendBroadcast(
             Intent(KeyIntent.action).apply {

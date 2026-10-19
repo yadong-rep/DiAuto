@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/hongqi_bg_dialog">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系我"
+            android:textColor="@color/hongqi_brand_gold"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="感谢您使用红旗飞屏，当前功能需要激活后使用，费用看着给。\n激活后，您将获得完整功能权限及后续服务支持。\n请联系我进行激活，感谢您的理解与支持。"
+                android:textColor="@color/hongqi_brand_gold"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hongqi_weixin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="使用微信扫一扫"
+                android:textColor="#888888"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- 右上角关闭按钮（浮在 ScrollView 之上，不随内容滚动） -->
+    <TextView
+        android:id="@+id/hongqi_dialog_btn_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:gravity="center"
+        android:text="✕"
+        android:textColor="@color/hongqi_brand_gold"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:focusable="true" />
+
+</FrameLayout>

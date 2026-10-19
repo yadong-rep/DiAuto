@@ -43,6 +43,9 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.layout.fragment_home, container, false)
 
     override fun onViewCreated(view: View, state: Bundle?) {
+        view.findViewById<View>(R.id.hongqi_features_button).setOnClickListener {
+            com.hongqi.flighting.integration.FeatureIntegration.openFeatures(requireContext())
+        }
         view.findViewById<View>(R.id.wifi_button).setOnClickListener {
             if (app.commManager.isConnected) openProjection()
             else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
